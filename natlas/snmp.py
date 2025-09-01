@@ -29,6 +29,7 @@ from pysnmp.entity.rfc3413.oneliner import cmdgen
 SNMP_PORT = 161
 
 OID_SYSNAME             = '1.3.6.1.2.1.1.5.0'
+OID_SYSLOCATION         = '1.3.6.1.2.1.1.6.0'
 
 OID_SYS_SERIAL          = '1.3.6.1.4.1.9.3.6.3.0'
 OID_SYS_BOOT            = '1.3.6.1.4.1.9.2.1.73.0'

@@ -64,6 +64,7 @@ class natlas_node_link:
         self.remote_ios                 = None
         self.remote_mac                 = None
         self.discovered_proto           = None
+        self.loca                       = None
 
     def __str__(self):
         return (
@@ -87,11 +88,12 @@ class natlas_node_link:
                 'remote_ios             = %s\n' \
                 'remote_mac             = %s\n' \
                 'discovered_proto       = %s\n' \
+                'loca                   = %s\n' \
                 % (self.link_type, self.remote_ip, self.remote_name, self.vlan, self.local_native_vlan,
                     self.local_allowed_vlans, self.remote_native_vlan, self.remote_allowed_vlans,
                     self.local_port, self.remote_port, self.local_lag, self.remote_lag, self.local_lag_ips,
                     self.remote_lag_ips, self.local_if_ip, self.remote_if_ip, self.remote_platform, self.remote_ios,
-                    self.remote_mac, self.discovered_proto))
+                    self.remote_mac, self.discovered_proto, self.loca))
     def __repr__(self):
         return ('<local_port="%s",remote_name="%s",remote_port="%s">' % (self.local_port, self.remote_name, self.remote_port))
 
@@ -161,6 +163,7 @@ class natlas_node:
             self.get_bootf          = setting
             self.get_chassis_info   = setting
             self.get_vpc            = setting
+            self.get_loca           = setting
 
     def __init__(self, ip=None):
         self.opts               = natlas_node._node_opts()
@@ -201,6 +204,7 @@ class natlas_node:
         self.vlan_vbtbl         = None
         self.vlandesc_vbtbl     = None
         self.arp_vbtbl          = None
+        self.loca               = None
 
     def __str__(self):
         return (
@@ -223,15 +227,16 @@ class natlas_node:
                 'Stack      = %s\n'         \
                 'VSS        = %s\n'
                 'Links      = %s\n'
+                'Loca       = %s\n'
                 % (self.name, self.ip, self.plat, self.ios, self.router,
                     self.ospf_id, self.bgp_las, self.hsrp_pri, self.hsrp_vip,
                     self.serial, self.bootfile, self.svis, self.loopbacks,
                     self.vpc_peerlink_if, self.vpc_peerlink_node, self.vpc_domain,
-                    self.stack, self.vss, self.links)
+                    self.stack, self.vss, self.links, self.loca)
         )
     def __repr__(self):
-        return ('<name=%s, ip=%s, plat=%s, ios=%s, serial=%s, router=%s, vss=%s, stack=%s>' %
-                (self.name, self.ip, self.plat, self.ios, self.serial, self.router, self.vss, self.stack))
+        return ('<name=%s, ip=%s, plat=%s, ios=%s, serial=%s, router=%s, vss=%s, loca=%s, stack=%s>' %
+                (self.name, self.ip, self.plat, self.ios, self.serial, self.router, self.vss, self.loca, self.stack))
 
 
     def add_link(self, link):
@@ -298,6 +303,9 @@ class natlas_node:
         # serial
         if ((self.opts.get_serial == 1) & (self.stack.count == 0) & (self.vss.enabled == 0)):
             self.serial = snmpobj.get_val(OID_SYS_SERIAL)
+        
+        if (self.opts.get_loca):
+            self.loca = snmpobj.get_val(OID_SYSLOCATION)
 
         # SVI
         if (self.opts.get_svi == True):

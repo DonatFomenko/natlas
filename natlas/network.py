@@ -170,6 +170,7 @@ class natlas_network:
             n.opts.get_vpc           = True
             n.opts.get_ios           = True
             n.opts.get_plat          = True
+            n.opts.get_loca          = True
 
             start = timer()
             n.query_node()

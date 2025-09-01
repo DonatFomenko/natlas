@@ -56,17 +56,17 @@ class natlas_output_catalog:
                 for smem in n.stack.members:
                     serial = smem.serial or 'NOT CONFIGURED TO POLL'
                     plat   = smem.plat or 'NOT CONFIGURED TO POLL'
-                    f.write('"%s","%s","%s","%s","%s","STACK","%s"\n' % (n.name, n.ip[0], plat, n.ios, serial, n.bootfile))
+                    f.write('"%s","%s","%s","%s","%s","STACK","%s"\n' % (n.name, n.loca, n.ip[0], plat, n.ios, serial, n.bootfile))
             elif (n.vss.enabled != 0):
                 #vss
                 for i in range(0, 2):
                     serial = n.vss.members[i].serial
                     plat   = n.vss.members[i].plat
                     ios    = n.vss.members[i].ios
-                    f.write('"%s","%s","%s","%s","%s","VSS","%s"\n' % (n.name, n.ip[0], plat, ios, serial, n.bootfile))
+                    f.write('"%s","%s","%s","%s","%s","VSS","%s"\n' % (n.name, n.loca, n.ip[0], plat, ios, serial, n.bootfile))
             else:
                 # stand alone
-                f.write('"%s","%s","%s","%s","%s","","%s"\n' % (n.name, n.ip[0], n.plat, n.ios, n.serial, n.bootfile))
+                f.write('"%s","%s","%s","%s","%s","","%s"\n' % (n.name, n.loca, n.ip[0], n.plat, n.ios, n.serial, n.bootfile))
 
         f.close()
 

@@ -38,6 +38,7 @@ class natlas_config_diagram:
     expand_lag          = True
     group_vpc           = False
     node_text           = '<font point-size="10"><b>{node.name}</b></font><br />' \
+                            '{node.loca}<br />' \
                             '{node.ip}<br />' \
                             '<%if {node.ios}: {node.ios}<br />%>' \
                             '<%if {node.plat}: {node.plat}<br />%>' \
